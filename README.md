@@ -33,6 +33,58 @@ Peekaboo brings high-fidelity screen capture, AI analysis, and complete GUI auto
   npx -y @steipete/peekaboo
   ```
 
+## Codex and Claude Code MCP Deployment (Local)
+
+For stable local MCP startup and local-model analysis, prefer launching the installed `peekaboo` binary directly and set explicit provider env vars.
+
+Recommended runtime behavior:
+- Use direct binary launch instead of `npx` when available: `/opt/homebrew/bin/peekaboo mcp`
+- Keep runtime data under a persistent path (example): `/Volumes/Data/_ai/mcp-data/peekaboo`
+- For local vision analysis, set:
+  - `PEEKABOO_OLLAMA_BASE_URL=http://127.0.0.1:11434`
+  - `PEEKABOO_AI_PROVIDERS=ollama/llava:latest`
+
+Codex (`~/.codex/config.toml`) example:
+
+```toml
+[mcp_servers.peekaboo]
+command = "bash"
+args = ["-lc", "mkdir -p /Volumes/Data/_ai/mcp-data/peekaboo && cd /Volumes/Data/_ai/mcp-data/peekaboo && exec /opt/homebrew/bin/peekaboo mcp"]
+startup_timeout_sec = 120
+
+[mcp_servers.peekaboo.env]
+PEEKABOO_LOG_FILE = "/Volumes/Data/_ai/mcp-data/peekaboo/peekaboo-mcp.log"
+PEEKABOO_OLLAMA_BASE_URL = "http://127.0.0.1:11434"
+PEEKABOO_AI_PROVIDERS = "ollama/llava:latest"
+```
+
+Claude Code (`~/.claude.json`) server entry example:
+
+```json
+{
+  "mcpServers": {
+    "peekaboo": {
+      "command": "bash",
+      "args": [
+        "-lc",
+        "mkdir -p /Volumes/Data/_ai/mcp-data/peekaboo && cd /Volumes/Data/_ai/mcp-data/peekaboo && exec /opt/homebrew/bin/peekaboo mcp"
+      ],
+      "env": {
+        "PEEKABOO_LOG_FILE": "/Volumes/Data/_ai/mcp-data/peekaboo/peekaboo-mcp.log",
+        "PEEKABOO_OLLAMA_BASE_URL": "http://127.0.0.1:11434",
+        "PEEKABOO_AI_PROVIDERS": "ollama/llava:latest"
+      }
+    }
+  }
+}
+```
+
+Notes:
+- After changing MCP env/config, restart/reload your MCP client so the running process picks up new values.
+- Pull local model once before use: `ollama pull llava:latest`
+- Keep provider lists forward-compatible by ordering preferred local/cloud providers in `PEEKABOO_AI_PROVIDERS`.
+
+
 ## Quick start
 ```bash
 # Capture full screen at Retina scale and save to Desktop
