@@ -39,7 +39,7 @@ For stable local MCP startup and local-model analysis, prefer launching the inst
 
 Recommended runtime behavior:
 - Use direct binary launch instead of `npx` when available: `/opt/homebrew/bin/peekaboo mcp`
-- Keep runtime data under a persistent path (example): `/Volumes/Data/_ai/mcp-data/peekaboo`
+- Keep runtime data under a persistent path (example): `/Volumes/Data/_ai/_mcp/mcp-data/peekaboo`
 - For local vision analysis, set:
   - `PEEKABOO_OLLAMA_BASE_URL=http://127.0.0.1:11434`
   - `PEEKABOO_AI_PROVIDERS=ollama/llava:latest`
@@ -49,11 +49,11 @@ Codex (`~/.codex/config.toml`) example:
 ```toml
 [mcp_servers.peekaboo]
 command = "bash"
-args = ["-lc", "mkdir -p /Volumes/Data/_ai/mcp-data/peekaboo && cd /Volumes/Data/_ai/mcp-data/peekaboo && exec /opt/homebrew/bin/peekaboo mcp"]
+args = ["-lc", "mkdir -p /Volumes/Data/_ai/_mcp/mcp-data/peekaboo && cd /Volumes/Data/_ai/_mcp/mcp-data/peekaboo && exec /opt/homebrew/bin/peekaboo mcp"]
 startup_timeout_sec = 120
 
 [mcp_servers.peekaboo.env]
-PEEKABOO_LOG_FILE = "/Volumes/Data/_ai/mcp-data/peekaboo/peekaboo-mcp.log"
+PEEKABOO_LOG_FILE = "/Volumes/Data/_ai/_mcp/mcp-data/peekaboo/peekaboo-mcp.log"
 PEEKABOO_OLLAMA_BASE_URL = "http://127.0.0.1:11434"
 PEEKABOO_AI_PROVIDERS = "ollama/llava:latest"
 ```
@@ -67,10 +67,10 @@ Claude Code (`~/.claude.json`) server entry example:
       "command": "bash",
       "args": [
         "-lc",
-        "mkdir -p /Volumes/Data/_ai/mcp-data/peekaboo && cd /Volumes/Data/_ai/mcp-data/peekaboo && exec /opt/homebrew/bin/peekaboo mcp"
+        "mkdir -p /Volumes/Data/_ai/_mcp/mcp-data/peekaboo && cd /Volumes/Data/_ai/_mcp/mcp-data/peekaboo && exec /opt/homebrew/bin/peekaboo mcp"
       ],
       "env": {
-        "PEEKABOO_LOG_FILE": "/Volumes/Data/_ai/mcp-data/peekaboo/peekaboo-mcp.log",
+        "PEEKABOO_LOG_FILE": "/Volumes/Data/_ai/_mcp/mcp-data/peekaboo/peekaboo-mcp.log",
         "PEEKABOO_OLLAMA_BASE_URL": "http://127.0.0.1:11434",
         "PEEKABOO_AI_PROVIDERS": "ollama/llava:latest"
       }
@@ -170,3 +170,14 @@ Set providers via `PEEKABOO_AI_PROVIDERS` or `peekaboo config add`.
 
 ## License
 MIT
+
+## Local Customization Tracking
+- Local machine-specific integration, client wiring, and operational state are tracked under the external data root.
+- Local metadata path: `/Volumes/Data/_ai/_mcp/mcp-data/<name>/meta`
+- Repo-side capability contract is in `docs/local-capability/`.
+- Secrets are never stored in repo docs; only variable names and loading locations are documented.
+
+## Local Enhancements Capture (2026-03-13)
+- Captured current local changes, configuration updates, and operational enhancements for GitHub publication.
+- Includes synchronization with sub-repo link updates where applicable.
+- Cross-reference local docs and capability notes added in this repository.

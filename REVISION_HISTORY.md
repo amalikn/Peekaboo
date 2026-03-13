@@ -304,3 +304,7 @@ Auto-maintained by `my-github-mcp` on `git_push`.
 | 2026-03-10T06:45:54.742376+00:00 | main | origin | `e1cc480bf1f6` | docs: drop beta4 date |
 | 2026-03-10T06:45:54.742376+00:00 | main | origin | `bace59f90bb2` | fix: drop invalid retroactive attribute |
 | 2026-03-10T06:45:54.742376+00:00 | main | origin | `0b9e9e444c36` | docs: add Codex/Claude MCP local deployment and Ollama llava defaults |
+
+## 2026-03-13
+- Recorded and prepared local enhancements for publication.
+- Updated repository documentation to reflect current operational and integration changes.
